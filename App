@@ -1,0 +1,98 @@
+public class App {
+    static class node {
+        int data;
+        node next;
+        node(int value) {
+            data = value;
+            next = null;
+        }
+    }
+
+    static node head;
+
+    static void printlist() {
+        node p = head;
+        System.out.print("\n[");
+        while(p != null) {
+            System.out.print(" " + p.data + " ");
+            p = p.next;
+        }
+        System.out.print("]");
+    }
+
+    static void insertatend(int data) {
+        node lk = new node(data);
+        if (head == null) {
+            head = lk;
+            return;
+        }
+        node linkedlist = head;
+        while (linkedlist.next != null)
+            linkedlist = linkedlist.next;
+        linkedlist.next = lk;
+    }
+
+    static void insertatbeginin(int data) {
+        node lk = new node(data);
+        lk.next = head;
+        head = lk;
+    }
+
+    static void printOnlyDuplicates() {
+        node current = head;
+        int currentIndex = 0;
+
+        while (current != null) {
+            // Check if this is the first occurrence of current.data
+            boolean isFirstOccurrence = true;
+            node checker = head;
+            while (checker != current) {
+                if (checker.data == current.data) {
+                    isFirstOccurrence = false;
+                    break;
+                }
+                checker = checker.next;
+            }
+
+            if (isFirstOccurrence) {
+                // Look ahead for duplicates
+                node runner = current.next;
+                int runnerIndex = currentIndex + 1;
+                boolean foundDuplicate = false;
+                String indices = "" + currentIndex;
+
+                while (runner != null) {
+                    if (runner.data == current.data) {
+                        foundDuplicate = true;
+                        indices += ", " + runnerIndex;
+                    }
+                    runner = runner.next;
+                    runnerIndex++;
+                }
+
+                if (foundDuplicate) {
+                    System.out.println("Duplicate number " + current.data + " found at indices: " + indices);
+                }
+            }
+
+            current = current.next;
+            currentIndex++;
+        }
+    }
+
+    public static void main(String[] args) {
+        insertatend(5);
+        insertatend(12);
+        insertatend(22);
+        insertatend(22);
+        insertatend(44);
+        insertatend(5);
+
+        System.out.print("Linked List: ");
+        printlist();
+
+        System.out.println();
+        printOnlyDuplicates();
+        System.out.println("\nKale Riley A. Saquing \nCOM242");
+    }
+}
