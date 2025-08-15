@@ -1,0 +1,127 @@
+import java.util.ArrayList;
+public class App {
+    static class node {
+        int data;
+        node next;
+        node(int value) {
+            data = value;
+            next = null;
+        }
+    }
+
+    static node head;
+
+    static void printlist() {
+    node p = head;
+    System.out.print("\n[");
+    while (p != null) {
+        System.out.print(p.data);
+        if (p.next != null) {
+            System.out.print(", ");
+        }
+        p = p.next;
+    }
+    System.out.print("]");
+}
+
+
+    static void insertatbeginin(int data) {
+        node lk = new node(data);
+        lk.next = head;
+        head = lk;
+    }
+
+    static void deleteAtBegin() {
+        head = head.next;
+    }
+
+    static void deleteAtPosition(int position) {
+        if (head == null) return;
+
+        if (position == 0) {
+            head = head.next;
+            return;
+        }
+
+        node current = head;
+        for (int i = 0; current != null && i < position - 1; i++) {
+            current = current.next;
+        }
+
+        if (current == null || current.next == null) return;
+
+        current.next = current.next.next;
+    }
+    
+    static void insertAtPosition(int data, int position) {
+    node newNode = new node(data);
+
+    if (position == 0) {
+        newNode.next = head;
+        head = newNode;
+        return;
+    }
+
+    node current = head;
+    for (int i = 0; current != null && i < position - 1; i++) {
+        current = current.next;
+    }
+
+    if (current == null) {
+        System.out.println("Position out of bounds");
+        return;
+    }
+
+    newNode.next = current.next;
+    current.next = newNode;
+}
+
+static void sortList() {
+    if (head == null) return;
+
+    boolean swapped;
+    do {
+        swapped = false;
+        node current = head;
+        while (current.next != null) {
+            if (current.data > current.next.data) {
+                // Swap data values
+                int temp = current.data;
+                current.data = current.next.data;
+                current.next.data = temp;
+                swapped = true;
+            }
+            current = current.next;
+        }
+    } while (swapped);
+}
+
+
+    public static void main(String[] args) {
+        insertatbeginin(12);
+        insertatbeginin(22);
+        insertatbeginin(30);
+        insertatbeginin(44);
+        insertatbeginin(50);
+        insertatbeginin(33);
+
+        System.out.print("Original Linked List: ");
+        printlist();
+        
+        deleteAtBegin();
+        deleteAtPosition(4);
+        deleteAtPosition(1);
+        insertAtPosition(0, 1);
+        
+        
+        
+        System.out.print("\nLinked List after deletions: ");
+        printlist();
+        
+        sortList();
+        
+        System.out.print("\nLinked list after sorting: ");
+        printlist();
+    }
+}
+
