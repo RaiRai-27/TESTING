@@ -1,0 +1,90 @@
+public class App {
+    public static void main(String[] args) {
+        int[] array = {7, 12, 9, 11, 3};
+        bubbleSort(array);
+
+        int[] arr = {62, 25, 12, 22, 11};
+        selectionSort(arr);
+
+        int[] ary = {64, 25, 12, 22, 11};
+        quickSort(ary);
+
+        System.out.println("Quick Sort:");
+        for (int num : ary) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        System.out.println("Selection Sort:");
+        for (int num : arr) {
+            System.out.print(num + " ");
+        }
+        System.out.println();
+        System.out.println("Bubble Sort:");
+        for (int num : array) {
+            System.out.print(num + " ");
+        }
+    }
+
+    public static void bubbleSort(int[] array) {
+        int len = array.length;
+        for (int i = 0; i < len - 1; i++) {
+            for (int j = 0; j < len - i - 1; j++) {
+                if (array[j] > array[j + 1]) {
+                    int temp = array[j];
+                    array[j] = array[j + 1];
+                    array[j + 1] = temp;
+                }
+            }
+        }
+    }
+
+    public static void selectionSort(int[] arr) {
+        int n = arr.length;
+        for (int i = 0; i < n - 1; i++) {
+            int minIndex = i;
+
+            for (int j = i + 1; j < n; j++) {
+                if (arr[j] < arr[minIndex]) {
+                    minIndex = j;
+                }
+            }
+
+            int temp = arr[i];
+            arr[i] = arr[minIndex];
+            arr[minIndex] = temp;
+        }
+    }
+
+    public static int partition(int ary[], int low, int high) {
+        int pivot = ary[high];
+        int i = low - 1;
+
+        for (int j = low; j < high; j++) {
+            if (ary[j] <= pivot) {
+                i++;
+
+                int temp = ary[i];
+                ary[i] = ary[j];
+                ary[j] = temp;
+            }
+        }
+
+        int temp = ary[i + 1];
+        ary[i + 1] = ary[high];
+        ary[high] = temp;
+
+        return i + 1;
+    }
+
+    public static void quickSortUtil(int ary[], int low, int high) {
+        if (low < high) {
+            int pivot = partition(ary, low, high);
+            quickSortUtil(ary, low, pivot - 1);
+            quickSortUtil(ary, pivot + 1, high);
+        }
+    }
+
+    public static void quickSort(int ary[]) {
+        quickSortUtil(ary, 0, ary.length - 1);
+    }
+}
